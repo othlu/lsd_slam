@@ -30,7 +30,7 @@
 #include <iostream>
 
 #ifdef __MACH__
-	//#include <GL/glx.h>
+	// #include <GL/glx.h>
 	#include <GL/gl.h>
 	#include <GL/glu.h>
 #else
@@ -242,7 +242,6 @@ void PointCloudViewer::draw()
 	if(showCurrentPointcloud)
 		currentCamDisplay->drawPC(pointTesselation, 1);
 
-
 	graphDisplay->draw();
 
 
@@ -328,7 +327,7 @@ void PointCloudViewer::keyPressEvent(QKeyEvent *e)
     	  meddleMutex.lock();
 
 
-    	  float x,y,z;
+    	  double x,y,z;
     	  camera()->frame()->getPosition(x,y,z);
     	  animationList.push_back(AnimationObject(false, lastAnimTime, 2, qglviewer::Frame(qglviewer::Vec(0,0,0), camera()->frame()->orientation())));
     	  animationList.back().frame.setPosition(x,y,z);

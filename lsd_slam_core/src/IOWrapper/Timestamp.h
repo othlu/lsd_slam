@@ -30,7 +30,7 @@
 // TODO: remove this hack
 namespace std {
 	namespace chrono {
-		#if (__GNUC__ > 4) || (__GNUC_MINOR__ >= 8)
+		#if (__GNUC__ > 4) || (__GNUC_MINOR__ >= 8) || __clang__
 			#define monotonic_clock steady_clock
 		#endif
 	}
