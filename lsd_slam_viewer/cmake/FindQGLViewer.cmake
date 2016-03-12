@@ -8,7 +8,17 @@ FIND_PATH(QGLVIEWER_INCLUDE_DIR qglviewer.h
     /usr/local/include/QGLViewer
     /sw/include/QGLViewer
     ENV QGLVIEWERROOT
-  )
+)
+
+if (APPLE)
+  if (NOT QGLVIEWER_INCLUDE_DIR)
+    # find the framework variant of QGLViewer if on osx
+    FIND_PATH(QGLVIEWER_INCLUDE_DIR QGLViewer/qglviewer.h
+      /usr/local/lib/
+      ENV QGLVIEWERROOT
+    )
+  endif()
+endif()
 
 find_library(QGLVIEWER_LIBRARY_RELEASE
   NAMES qglviewer-qt4 qglviewer QGLViewer QGLViewer2
@@ -21,6 +31,7 @@ find_library(QGLVIEWER_LIBRARY_RELEASE
         ENV LIBRARY_PATH
   PATH_SUFFIXES QGLViewer QGLViewer/release
 )
+
 find_library(QGLVIEWER_LIBRARY_DEBUG
   NAMES dqglviewer dQGLViewer dQGLViewer2 QGLViewerd2
   PATHS /usr/lib
