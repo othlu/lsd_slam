@@ -84,25 +84,8 @@ include_directories(${QGLVIEWER_INCLUDE_DIR}
 		    ${QT_INCLUDES} )
 
 
-# On Mac OSX it is not possible to build with at least clang shipped by Apple
-# my guess due to lack of some C++11 features
-# However gcc unable to link against libraries built by clang
-if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-	SET (CMAKE_C_COMPILER             "/usr/local/bin/gcc")
-	SET (CMAKE_CXX_COMPILER             "/usr/local/bin/g++")
-	SET (CMAKE_AR      "/usr/local/bin/ar")
-	SET (CMAKE_LINKER  "/usr/local/bin/ld")
-	SET (CMAKE_NM      "/usr/local/bin/nm")
-	SET (CMAKE_OBJDUMP "/usr/local/bin/objdump")
-	SET (CMAKE_RANLIB  "/usr/local/bin/ranlib")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse4.2 -Wall -D_REENTRANT --std=c++0x")
-else()
-	# SSE flags
-	set(CMAKE_CXX_FLAGS
-	"${CMAKE_CXX_FLAGS} -march=native -Wall -std=c++0x"
-	)
-endif()
+# SSE flags
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -Wall -std=c++0x")
 
 add_message_files(DIRECTORY msg FILES keyframeMsg.msg keyframeGraphMsg.msg)
 generate_messages(DEPENDENCIES)
@@ -133,14 +116,14 @@ DEPENDS
 )
 
 # Sources files
-set(SOURCE_FILES         
+set(SOURCE_FILES
   src/PointCloudViewer.cpp
   src/KeyFrameDisplay.cpp
   src/KeyFrameGraphDisplay.cpp
   src/settings.cpp
 )
 
-set(HEADER_FILES     
+set(HEADER_FILES
   src/PointCloudViewer.h
   src/KeyFrameDisplay.h
   src/KeyFrameGraphDisplay.h
@@ -150,11 +133,11 @@ set(HEADER_FILES
 
 include_directories(
   ${PROJECT_SOURCE_DIR}/thirdparty/Sophus
-)  
+)
 
 add_executable(viewer src/main_viewer.cpp ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(viewer ${QGLViewer_LIBRARIES}
-			     ${QGLVIEWER_LIBRARY} 
+			     ${QGLVIEWER_LIBRARY}
 			     ${catkin_LIBRARIES}
 			     ${Boost_LIBRARIES}
 			     ${QT_LIBRARIES}
