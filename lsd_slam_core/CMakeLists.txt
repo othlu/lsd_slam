@@ -84,35 +84,8 @@ add_definitions("-DENABLE_SSE")
 # Even better: -march=native -mno-avx. Or see the answer by @capisce
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -msse4.2 -Wall -D_REENTRANT --std=c++0x")
 
-# On Mac OSX it is not possible to build with at least clang shipped by Apple
-# my guess due to lack of some c++0x/C++11 features
-# However gcc unable to link against libraries built by clang
-if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-	# SET (CMAKE_C_COMPILER             "/usr/bin/clang")
-	# SET (CMAKE_CXX_COMPILER             "/usr/bin/clang++")
-	#     SET (CMAKE_AR      "/usr/bin/llvm-ar")
-	#     SET (CMAKE_LINKER  "/usr/bin/llvm-ld")
-	#     SET (CMAKE_NM      "/usr/bin/llvm-nm")
-	#     SET (CMAKE_OBJDUMP "/usr/bin/llvm-objdump")
-	#     SET (CMAKE_RANLIB  "/usr/bin/llvm-ranlib")
-	# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ")
-	SET (CMAKE_C_COMPILER             "/usr/local/bin/gcc")
-	SET (CMAKE_CXX_COMPILER             "/usr/local/bin/g++")
-	SET (CMAKE_AR      "/usr/local/bin/ar")
-	SET (CMAKE_LINKER  "/usr/local/bin/ld")
-	SET (CMAKE_NM      "/usr/local/bin/nm")
-	SET (CMAKE_OBJDUMP "/usr/local/bin/objdump")
-	SET (CMAKE_RANLIB  "/usr/local/bin/ranlib")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse4.2 -Wall -D_REENTRANT --std=c++0x")
-else()
-	# SSE flags
-	set(CMAKE_CXX_FLAGS
-	"${CMAKE_CXX_FLAGS} -march=native -Wall -std=c++0x"
-	)
-endif()
-
-
+# SSE flags
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -Wall -std=c++11 -fcxx-exceptions")
 
 # Set source files
 set(lsd_SOURCE_FILES
@@ -147,6 +120,7 @@ set(SOURCE_FILES
 
 include_directories(
   include
+  ${X11_INCLUDE_DIR}
   ${EIGEN_INCLUDE_DIR}
   ${EIGEN3_INCLUDE_DIR}
   ${PROJECT_SOURCE_DIR}/src
