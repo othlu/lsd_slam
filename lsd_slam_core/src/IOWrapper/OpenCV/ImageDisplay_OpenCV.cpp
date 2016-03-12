@@ -90,6 +90,7 @@ void displayImage(const char* windowName, const cv::Mat& image, bool autoSize)
 		if(imageDisplayThread == 0)
 			makeDisplayThread();
 
+		cv::namedWindow(windowName, cv::WINDOW_NORMAL);
 		boost::unique_lock<boost::mutex> lock(openCVdisplayMutex);
 		displayQueue.push_back(DisplayImageObect());
 		displayQueue.back().autoSize = autoSize;
